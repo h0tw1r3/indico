@@ -29,6 +29,8 @@ from MaKaC.plugins.Collaboration.fossils import ICSBookingBaseIndexingFossil, \
     IQueryResultFossil
 from MaKaC.fossils.conference import IConferenceFossil
 
+from MaKaC.common.logger import Logger
+
 class CollaborationTools(object):
     """ Class with utility classmethods for the Collaboration plugins core and plugins
     """
@@ -284,6 +286,17 @@ class CollaborationTools(object):
         return l
 
     @classmethod
+    def pluginsWithEventSessionDisplay(cls) :
+        """ Utility function that returns a list of strings with the names of the
+            collaboration plugins that want to display something in event display pages
+        """
+        l = []
+        for pluginName in cls.getCollaborationPluginType().getPlugins():
+            if hasattr(cls.getCSBookingClass(pluginName), "_hasEventSessionDisplay"):
+                l.append(pluginName)
+        return l
+
+    @classmethod
     def pluginsWithIndexing(cls):
         """ Utility function that returns a list of strings with the names
             of the collaboration plugins that want to be indexed
@@ -344,8 +357,10 @@ class MailTools(object):
         if plugin and plugin.hasOption('sendMailNotifications'):
             admins = plugin.getOption('admins').getValue()
             sendMail = plugin.getOption('sendMailNotifications').getValue()
-            addEmails = plugin.getOption('additionalEmails').getValue()
-
+            if plugin.hasOption('additionalEmails'):
+                addEmails = plugin.getOption('additionalEmails').getValue()
+            else:
+                addEmails = CollaborationTools.getCollaborationOptionValue('additionalEmails')
         else:
             # get definitions from the Collaboration plugin type
             admins = CollaborationTools.getCollaborationOptionValue('collaborationAdmins')
