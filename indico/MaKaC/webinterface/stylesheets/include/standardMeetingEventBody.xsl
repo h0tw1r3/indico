@@ -23,9 +23,13 @@
 
 <xsl:template name="meetingEventBody">
     <xsl:param name="minutes"/>
+    <xsl:param name="orderedList"/>
+    
     <div class="meetingEventSubHeader">
 
-      <xsl:call-template name="header2"><xsl:with-param name="minutes" select="$minutes"/></xsl:call-template>
+      <xsl:call-template name="header2">
+          <xsl:with-param name="minutes" select="$minutes"/>
+      </xsl:call-template>
 
     </div>
 
@@ -76,7 +80,10 @@ goToDayLink.observeClick(function(e) {
 
 </script>
 
-        <xsl:call-template name="body"><xsl:with-param name="minutes" select="$minutes"/></xsl:call-template>
+        <xsl:call-template name="body">
+            <xsl:with-param name="minutes" select="$minutes"/>
+            <xsl:with-param name="orderedList" select="$orderedList"/>
+        </xsl:call-template>
     </div>
 
 </xsl:template>

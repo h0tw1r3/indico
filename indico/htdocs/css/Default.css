@@ -6423,3 +6423,80 @@ div.invalid {
 body.cke_show_borders {
     height: auto;
 }
+
+/****** CSS Overwrite for ILC Agenda begins here ******/
+div.globalMenu
+{
+    color:#23336C;
+    background: url(../images/sprites.png) repeat-x scroll 0 0;
+}
+div.globalMenu a, div.globalMenu span
+{
+    color: #23336C;
+}
+div.globalMenu li.mouseover {
+    background: url(../images/sprites.png) repeat-x scroll 0 -30px;
+    color: #333333;
+    text-decoration: none;
+}
+div.globalMenu li.mouseover a:hover, ul.globalMenuPopupList>li>a:hover {
+    text-decoration: none;
+}
+ul.globalMenuPopupList {
+/*    background-color: #607000;*/
+    background-color: #B2CE3D;
+    border: 0;
+    color: #23336C;
+    display: block;
+}
+ul.globalMenuPopupList li a{
+    color: #23336C;
+}
+ul.globalMenuPopupList li a:hover, ul.popupList li a:hover {
+    background: #DBEA5E;
+/*    background: #23336C;*/
+/*    color: #333333;*/
+    color: #23336C;
+}
+
+img.headerLogo {
+    width: 265px;
+    height: 52px;
+}
+div.headerAboutIndico
+{
+/*    color:#809000;*/
+/*    color: #B2CE3D;*/
+    color: #23336C;
+    font-size: 20px;
+    font-style: normal;
+    font-weight:bold;
+    left: 320px;
+    top: 25px;
+    width: 500px;
+}
+div.globalMenu .dropDownMenu {
+    padding-right: 20px;
+    background: transparent url(../images/menu_arrow_black.png) scroll no-repeat center right;
+}
+.pageHeader {
+    background-color: #FFFFFF;
+}
+
+.categoryTitle {
+    color: #23336C;
+    font-family: helvetica, arial;
+    font-size: 26px;
+    padding-bottom:6px;
+}
+a:link, .fakeLink {
+    color: #23346C;
+}
+a:visited {
+    color: #23346C;
+}
+a:hover, .fakeLink:hover {
+    color: #809000;
+    text-decoration: underline;
+}
+

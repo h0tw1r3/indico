@@ -88,6 +88,7 @@
 
   <xsl:template name="body">
     <xsl:param name="minutes">off</xsl:param>
+    <xsl:param name="orderedList">off</xsl:param>
     <ul class="dayList">
       <xsl:for-each select="./session|./contribution|./break">
         <xsl:variable name="ids" select="./ID"/>
@@ -108,6 +109,7 @@
         </xsl:if>
         <xsl:apply-templates select=".">
           <xsl:with-param name="minutes" select="$minutes"/>
+          <xsl:with-param name="orderedList" select="$orderedList"/>
         </xsl:apply-templates>
         <xsl:if
           test="count(following::session[position()=1 and substring(./startDate,0,11)=$day]) = 0 and count(following::contribution[position()=1 and substring(./startDate,0,11)=$day]) = 0 and count(following::break[position()=1 and substring(./startDate,0,11)=$day]) = 0">
@@ -121,6 +123,7 @@
 
   <xsl:template match="session">
     <xsl:param name="minutes">off</xsl:param>
+    <xsl:param name="orderedList">off</xsl:param>
     <xsl:param name="titleClass">topLevelTitle</xsl:param>
 
     <li class="meetingSession">
@@ -138,8 +141,15 @@
           </xsl:call-template>
 
         <span class="topLevelTime">
-          <xsl:value-of select="substring(./startDate,12,5)"/> - <xsl:value-of
-            select="substring(./endDate,12,5)"/>
+          <xsl:if test="$orderedList = 'true'">
+             <xsl:value-of select="substring(./startDate,12,5)"/> 
+            <br/>  - <xsl:value-of select="substring(./endDate,12,5)"/>
+          </xsl:if>
+          <xsl:if test="$orderedList != 'true'">
+            <xsl:value-of select="substring(./startDate,12,5)"/> - <xsl:value-of select="substring(./endDate,12,5)"/>
+          </xsl:if>
+          <!--<xsl:number from="session" level="any" format="1. "/>-->
+
         </span>
 
         <span class="{$titleClass}">
@@ -154,6 +164,18 @@
       <table class="sessionDetails">
         <tbody>
 
+          <xsl:for-each select="./videoBooking">
+            <tr>
+              <td class="leftCol">
+                <xsl:value-of select="./videoBookingType"/>:
+              </td>
+              <td>
+                 <span class="videoBooking" >
+                   <a href="{./videoBookingUrl}" target="_blank"><xsl:value-of select="./videoBookingTitle"/></a>
+                 </span>
+              </td>
+            </tr>
+          </xsl:for-each>
           <xsl:if test="count(child::convener) != 0">
             <tr>
               <td class="leftCol"><xsl:choose>
@@ -212,6 +234,7 @@
           <xsl:for-each select="./contribution|./break">
             <xsl:apply-templates select=".">
               <xsl:with-param name="minutes" select="$minutes"/>
+              <xsl:with-param name="orderedList" select="$orderedList"/>
               <xsl:with-param name="hideEndTime">true</xsl:with-param>
               <xsl:with-param name="timeClass">subEventLevelTime</xsl:with-param>
               <xsl:with-param name="titleClass">subEventLevelTitle</xsl:with-param>
@@ -228,6 +251,7 @@
 
   <xsl:template match="contribution">
     <xsl:param name="minutes">off</xsl:param>
+    <xsl:param name="orderedList">off</xsl:param>
     <xsl:param name="hideEndTime">false</xsl:param>
     <xsl:param name="timeClass">topLevelTime</xsl:param>
     <xsl:param name="titleClass">topLevelTitle</xsl:param>
@@ -265,10 +289,15 @@
       </xsl:if>
 
       <span class="{$timeClass}">
+        <xsl:if test="$orderedList = 'true'">
+             <xsl:value-of select="count(preceding-sibling::contribution) + 1" />.
+        </xsl:if>
+        <xsl:if test="$orderedList != 'true'">
           <xsl:value-of select="substring(./startDate,12,5)"/>
           <xsl:if test="$hideEndTime = 'false'">
              - <xsl:value-of select="substring(./endDate,12,5)"/>
           </xsl:if>
+        </xsl:if>
       </span>
 
       <span class="confModifPadding">
@@ -468,15 +497,21 @@
 
 
   <xsl:template match="break">
+    <xsl:param name="orderedList">false</xsl:param>
     <xsl:param name="hideEndTime">false</xsl:param>
     <xsl:param name="timeClass">topLevelTime</xsl:param>
     <xsl:param name="titleClass">topLevelTitle</xsl:param>
 
     <li class="breakListItem">
       <span class="{$timeClass}">
-        <xsl:value-of select="substring(./startDate,12,5)"/>
-        <xsl:if test="$hideEndTime = 'false'">
-          - <xsl:value-of select="substring(./endDate,12,5)"/>
+        <xsl:if test="$orderedList = 'true'">
+             <xsl:value-of select="substring(./startDate,12,5)"/>
+        </xsl:if>
+        <xsl:if test="$orderedList != 'true'">
+          <xsl:value-of select="substring(./startDate,12,5)"/>
+          <xsl:if test="$hideEndTime = 'false'">
+             - <xsl:value-of select="substring(./endDate,12,5)"/>
+          </xsl:if>
         </xsl:if>
       </span>
 
@@ -484,13 +519,22 @@
         <span class="{$titleClass}" style="color: #69856e">
           <xsl:value-of select="./name" disable-output-escaping="yes"/>
         </span>
-        <xsl:if test="$hideEndTime = 'true'">
-          <xsl:if test="./duration != '00:00'">
+        <xsl:if test="$orderedList = 'true'">
             <em><xsl:text disable-output-escaping="yes">&#38;nbsp;</xsl:text>
               <xsl:call-template name="prettyduration">
                 <xsl:with-param name="duration" select="./duration"/>
               </xsl:call-template>
             </em>
+        </xsl:if>
+        <xsl:if test="$orderedList != 'true'">
+          <xsl:if test="$hideEndTime = 'true'">
+            <xsl:if test="./duration != '00:00'">-->
+              <em><xsl:text disable-output-escaping="yes">&#38;nbsp;</xsl:text>
+                <xsl:call-template name="prettyduration">
+                  <xsl:with-param name="duration" select="./duration"/>
+                </xsl:call-template>
+              </em>
+            </xsl:if>
           </xsl:if>
         </xsl:if>
       </span>
@@ -919,6 +963,13 @@
                                   </a>
                                 </div>
                               </xsl:for-each>
+                              <xsl:for-each select="./linkLineNewWindow">
+                                <div>
+                                    <a href="{./href}" target="_blank">
+                                    <xsl:value-of select="./caption"/>
+                                  </a>
+                                </div>
+                              </xsl:for-each>
                             </td>
                           </tr>
                         </xsl:for-each>
@@ -1049,3 +1100,4 @@
   </xsl:template>
 
 </xsl:stylesheet>
+
