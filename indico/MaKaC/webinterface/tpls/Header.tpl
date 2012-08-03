@@ -16,7 +16,7 @@
 
         % if isFrontPage:
             <div class="headerAboutIndico">
-                ${ _("The Indico tool allows you to manage complex conferences, workshops and meetings.") }
+                ${ _("ILC Agenda") }
             </div>
         % endif
 
