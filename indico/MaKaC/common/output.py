@@ -43,7 +43,7 @@ import os, time
 from math import ceil
 from MaKaC.i18n import _
 from indico.util.i18n import i18nformat
-from MaKaC.common.timezoneUtils import DisplayTZ, nowutc
+from MaKaC.common.timezoneUtils import DisplayTZ, nowutc, minDatetime
 from MaKaC.common.utils import getHierarchicalId, resolveHierarchicalId
 from MaKaC.common.cache import MultiLevelCache, MultiLevelCacheEntry
 from MaKaC.rb_location import CrossLocationQueries, CrossLocationDB
@@ -706,6 +706,24 @@ class outputGenerator(Observable):
             modificons = 1
         out.openTag("session", [["color", session.getColor()],["textcolor", session.getTextColor()]])
         out.writeTag("ID", session.getId())
+
+        # The following code prints out the video bookings associated with a particular session
+        csbm = conf.getCSBookingManager()
+        if hasattr( csbm, "getEventSessionDisplayPlugins"):
+            pluginsWithSessionBookings = csbm.getEventSessionDisplayPlugins()
+            for pluginName in pluginsWithSessionBookings:
+                if PluginsHolder().hasPluginType("Collaboration") and PluginsHolder().getPluginType("Collaboration").hasPlugin(pluginName) and PluginsHolder().getPluginType("Collaboration").getPlugin(pluginName).isActive():
+                    Logger.get('output.py-Printing Sessions').info("%s is active. Printing out list of bookings" % pluginName)
+                    bookings = csbm.getBookingList(filterByType = pluginName, notify = False, onlyPublic = True)
+                    bookings.sort(key = lambda b: b.getStartDate() or minDatetime())
+                    for b in bookings:
+                        if session.getId() == b.getSessionId():
+                            # A plugin listed in a session should have a booking type, a title, and an associated URL.
+                            out.openTag("videoBooking")
+                            out.writeTag("videoBookingTitle",b._getTitle())
+                            out.writeTag("videoBookingUrl",b.getUrl())
+                            out.writeTag("videoBookingType",pluginName)
+                            out.closeTag("videoBooking")
 
         out.writeTag("parentProtection", simplejson.dumps(session.getAccessController().isProtected()))
         out.writeTag("materialList", simplejson.dumps(self._generateMaterialList(session)))
