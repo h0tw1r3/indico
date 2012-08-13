@@ -255,7 +255,7 @@ class CSBooking(CSBookingBase):
         if len(self.getWebExPass().strip()) == 0:
             return WebExError(errorType = None, userMessage = _("WebEx password is empty.  The booking cannot continue without this."))
 
-        if params["startDate"] > params["endDate"]:
+        if self._startDate >= self._endDate:
             return WebExError(errorType = None, userMessage = _("Start date of booking cannot be after end date."))
 
 #        allowedStartMinutes = self._WebExOptions["allowedPastMinutes"].getValue()
@@ -420,7 +420,7 @@ class CSBooking(CSBookingBase):
                                         self._latestChanges.append( "%s has changed." % ( verboseKeyNames[key] ) )
                                         break
                         else:
-                            self._bookingChangesHistory.append( _("""%s _("has changed"): %s""") % ( verboseKeyNames[key], params[key] ) )
+                            self._bookingChangesHistory.append( "%s has changed: %s" % ( verboseKeyNames[key], params[key] ) )
                             self._latestChanges.append( "%s has changed." % ( verboseKeyNames[key] ) )
             try:
                 result = ExternalOperationsManager.execute(self, "modifyBooking", WebExOperations.modifyBooking, self)
