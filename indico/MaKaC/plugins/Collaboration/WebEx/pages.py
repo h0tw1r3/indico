@@ -19,13 +19,21 @@
 ## along with CDS Indico; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-from MaKaC.plugins.Collaboration.base import WCSPageTemplateBase, WJSBase
-from MaKaC.webinterface.pages.collaboration import WAdvancedTabBase
+from datetime import timedelta
+
 from MaKaC.common.utils import formatDateTime
+from MaKaC.common.timezoneUtils import nowutc, getAdjustedDate
+
+from MaKaC.webinterface import urlHandlers
 from MaKaC.webinterface.common.tools import strip_ml_tags, unescape_html
-from MaKaC.plugins.Collaboration.WebEx.common import getMinStartDate,\
-    getMaxEndDate
+from MaKaC.webinterface.pages.collaboration import WAdvancedTabBase
+
+from MaKaC.plugins.Collaboration.base import WCSPageTemplateBase, WJSBase, WCSCSSBase
+from MaKaC.plugins.Collaboration.collaborationTools import CollaborationTools
+from MaKaC.plugins.Collaboration.WebEx.common import getMinStartDate, getMaxEndDate
+
 from MaKaC.i18n import _
+
 import re
 
 class WNewBookingForm(WCSPageTemplateBase):
@@ -112,6 +120,9 @@ class WInformationDisplay(WCSPageTemplateBase):
         vars["Booking"] = self._booking
         return vars
 
+class WStyle(WCSCSSBase):
+    pass
+
 class XMLGenerator(object):
     @classmethod
     def getFirstLineInfo(cls, booking, displayTz):
@@ -122,10 +133,6 @@ class XMLGenerator(object):
 
     @classmethod
     def getCustomBookingXML(cls, booking, displayTz, out):
-#        from MaKaC.common.logger import Logger
-#        from MaKaC.user import AvatarHolder
-#        for av in AvatarHolder().
-#        Logger.get('WebEx').error(booking._conf.getCreator().getEmail())
         booking.checkCanStart()
         params = booking.getBookingParams()
         if (booking.canBeStarted()):
@@ -174,3 +181,58 @@ class XMLGenerator(object):
         out.closeTag("section")
         out.closeTag("information")
 
+class ServiceInformation(object):
+    @classmethod
+    def getDisplayName(cls):
+        return "WebEx"
+
+    @classmethod
+    def getFirstLineInfo(cls, booking, displayTz=None):
+        return booking.getBookingParamByName('meetingTitle')
+
+    @classmethod
+    def getLaunchInfo(cls, booking, displayTz=None):
+        if (booking.canBeStarted()):
+            return {
+                "launchText" : _("Join Now!"),
+                "launchLink" : booking.getUrl(),
+                "launchTooltip" : _("Click here to join the WebEx meeting!")
+            }
+        return None
+
+    @classmethod
+    def getInformation(cls, booking, displayTz=None):
+        sections = []
+        sections.append({
+            "title" : _('Title:'),
+            "lines" : [booking._bookingParams["meetingTitle"]]
+        })
+
+        if booking.getHasAccessPassword():
+            if not booking.showAccessPassword():
+                sections.append({
+                    "title" : _('Password:'),
+                    "lines" : [_('This WebEx meeting is protected by a password')]
+                })
+            else:
+                sections.append({
+                    "title" : _('Password:'),
+                    "lines" : [booking.getAccessPassword()]
+                })
+        sections.append({
+            "title" : _("Auto-join URL:"),
+            "linkLines" : [(booking.getUrl(), booking.getUrl())]
+        })
+	sections.append({
+            "title" : _("Call-in toll free number (US/Canada):"),
+            "lines" : [booking.getPhoneNum()]
+        })
+	sections.append({
+            "title" : _("Call-in toll number: (US/Canada):"),
+            "lines" : [booking.getPhoneNumToll()]
+        })
+        sections.append({
+            "title" : _("Access code:"),
+            "lines" : [re.sub(r'(\d{3})(?=\d)',r'\1 ', str(booking._webExKey)[::-1])[::-1]]
+        })
+        return sections

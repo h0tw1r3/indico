@@ -19,7 +19,6 @@
 
 from MaKaC.plugins.Collaboration.fossils import ICSBookingBaseConfModifFossil,\
     ICSErrorBaseFossil, ICSBookingBaseIndexingFossil
-from MaKaC.common.logger import Logger
 from MaKaC.common.fossilize import IFossil
 
 
@@ -53,7 +52,6 @@ def removeComplex(bookingParams):
 class ICSBookingIndexingFossil(ICSBookingBaseIndexingFossil):
     def getBookingParams(self):
         """ Remove the booking params that are complex """
-        Logger.get('Logger WebEx').debug("In getBookingParams")
         getBookingParams.convert = lambda bookingParams: removeComplex(bookingParams)
         pass
 

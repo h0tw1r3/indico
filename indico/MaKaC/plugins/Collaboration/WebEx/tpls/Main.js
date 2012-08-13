@@ -24,19 +24,19 @@
                     errors.push($T("Start date cannot be before the current time"));
                 }*/
                 var startDatePlusExtraTime = new Date();
-                startDatePlusExtraTime.setTime(startDate.getTime() + <%= AllowedStartMinutes %> *60*1000);
+                startDatePlusExtraTime.setTime(startDate.getTime() + ${ AllowedStartMinutes } *60*1000);
                 if (beforeNow(startDatePlusExtraTime)) {
-                    errors.push($T("Start date cannot be before the past <%= AllowedStartMinutes %> minutes"));
+                    errors.push($T("Start date cannot be before the past ${ AllowedStartMinutes } minutes"));
                 }
 
-                // check start date is not before the minimum start date (event start date - <%= AllowedMarginMinutes %> min )
-                if (startDate < IndicoUtil.parseDateTime("<%= MinStartDate %>")) {
-                    errors.push($T("Start date more than <%= AllowedMarginMinutes %> minutes before event"));
+                // check start date is not before the minimum start date (event start date - ${ AllowedMarginMinutes } min )
+                if (startDate < IndicoUtil.parseDateTime("${ MinStartDate }")) {
+                    errors.push($T("Start date more than ${ AllowedMarginMinutes } minutes before event"));
                 }
 
-                // check start date is not after the maximum start date (event end date + <%= AllowedMarginMinutes %> min )
-                if (startDate > IndicoUtil.parseDateTime("<%= MaxEndDate %>")) {
-                    errors.push($T("Start date more than <%= AllowedMarginMinutes %> minutes after event"));
+                // check start date is not after the maximum start date (event end date + ${ AllowedMarginMinutes } min )
+                if (startDate > IndicoUtil.parseDateTime("${ MaxEndDate }")) {
+                    errors.push($T("Start date more than ${ AllowedMarginMinutes } minutes after event"));
                 }
 
                 // check start date is not after end date, if end date exists
@@ -59,14 +59,14 @@
                     errors.push($T("End date cannot be before the current time"));
                 }
 
-                // check end date is not after the maximum start date (event end date + <%= AllowedMarginMinutes %> min )
-                if (endDate > IndicoUtil.parseDateTime("<%= MaxEndDate %>")) {
-                    errors.push($T("End date more than <%= AllowedMarginMinutes %> minutes after event"));
+                // check end date is not after the maximum start date (event end date + ${ AllowedMarginMinutes } min )
+                if (endDate > IndicoUtil.parseDateTime("${ MaxEndDate }")) {
+                    errors.push($T("End date more than ${ AllowedMarginMinutes } minutes after event"));
                 }
 
-                // check start date is not before the minimum start date (event start date - <%= AllowedMarginMinutes %> min )
-                if (endDate < IndicoUtil.parseDateTime("<%= MinStartDate %>")) {
-                    errors.push($T("End date more than <%= AllowedMarginMinutes %> minutes before the event"));
+                // check start date is not before the minimum start date (event start date - ${ AllowedMarginMinutes } min )
+                if (endDate < IndicoUtil.parseDateTime("${ MinStartDate }")) {
+                    errors.push($T("End date more than ${ AllowedMarginMinutes } minutes before the event"));
                 }
 
                 // check start date is not after end date, if start date exists
@@ -224,7 +224,7 @@
     },
 
     getDateFields : function() {
-        document.getElementById('loggedInEmail').value = "<%= LoggedInEmail %>";
+        document.getElementById('loggedInEmail').value = "${ LoggedInEmail }";
         return ["startDate", "endDate"]
     },
 

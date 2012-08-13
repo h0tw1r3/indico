@@ -237,9 +237,6 @@ class CSBooking(CSBookingBase):
     def _getTitle(self):
         return self._bookingParams["meetingTitle"]
 
-    def _getPluginDisplayName(self):
-        return "WebEx"
-
     def _checkBookingParams(self):
         params = self.getBookingParams()
         for participant in self._participants.itervalues():

@@ -20,7 +20,8 @@
 
 from MaKaC.i18n import _
 
-pluginType = "Collaboration"
-pluginName = "WebEx"
-pluginDescription = _("WebEx, online conference network")
-
+__metadata__ = {
+    'type': "Collaboration",
+    'name': "WebEx",
+    'description': "WebEx, online conference network"
+    }

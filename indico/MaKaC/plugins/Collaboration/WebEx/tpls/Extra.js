@@ -3,7 +3,7 @@
  */
 var updateSessionTimes = function()
 {
-    var sessionTimes = <%= SessionTimes %>;
+    var sessionTimes = ${ SessionTimes };
     var selected = document.getElementById('session').selectedIndex;
     for (i=0; i<sessionTimes.sessions.length; i++)
     {
@@ -59,9 +59,9 @@ type("WebExLaunchClientPopup", ["ExclusivePopup"],
 var WebExStartDateHelpPopup = function(event) {
     IndicoUI.Widgets.Generic.tooltip(this, event,
         '<div style="padding:3px">' +
-            $T('Please create your booking between <%= MinStartDate %> and <%= MaxEndDate %>.') + '<br \/>' +
+            $T('Please create your booking between ${ MinStartDate } and ${ MaxEndDate }.') + '<br \/>' +
             $T("(Allowed dates \/ times based on your event's start date and end date)") + '<br \/>' +
-            $T('Also remember the start date cannot be more than <%= AllowedStartMinutes %> minutes in the past.') +
+            $T('Also remember the start date cannot be more than ${ AllowedStartMinutes } minutes in the past.') +
         '<\/div>');
 };
 
@@ -71,7 +71,7 @@ var WebExStartDateHelpPopup = function(event) {
 var WebExEndDateHelpPopup = function(event) {
     IndicoUI.Widgets.Generic.tooltip(this, event,
         '<div style="padding:3px">' +
-            $T('Please create your booking between <%= MinStartDate %> and <%= MaxEndDate %>') + '<br \/>' +
+            $T('Please create your booking between ${ MinStartDate } and ${ MaxEndDate }') + '<br \/>' +
             $T("(Allowed dates \/ times based on your event's start date and end date)") +
         '<\/div>');
 };

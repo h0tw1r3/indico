@@ -1,12 +1,10 @@
-<% declareTemplate(newTemplateStyle=True) %>
-
 <table style="margin-top: 10px;">
     <tr>
         <td class="bookingFormFieldName">
             <span>Meeting title</span>
         </td>
         <td>
-            <input id="meetingTitle" type="text" size="60" name="meetingTitle" value="<%=EventTitle%>" />
+            <input id="meetingTitle" type="text" size="60" name="meetingTitle" value="${ EventTitle }" />
         </td>
     </tr>
     <tr>
@@ -14,7 +12,7 @@
             <span>Agenda</span>
         </td>
         <td>
-            <textarea rows="3" cols="60" name="meetingDescription"><%=EventDescription%></textarea>
+            <textarea rows="3" cols="60" name="meetingDescription">${ EventDescription }</textarea>
         </td>
     </tr>
     <tr>
@@ -22,7 +20,7 @@
             <span>Timezone</span>
         </td>
         <td>
-            <span><%= TimeZone %></span>
+            <span>${ TimeZone }</span>
         </td>
     </tr>
     <tr>
@@ -30,7 +28,7 @@
             <span>Session</span>
         </td>
         <td>
-            <%= SessionList %>
+            ${ SessionList }
             <span id="session"></span>
         </td>
     </tr>
@@ -39,8 +37,8 @@
             <span>Start time</span>
         </td>
         <td>
-            <input id="startDate" type="text" size="16" name="startDate" id="startDate" value="<%= DefaultStartDate %>" />
-            <span id="startDateHelp"></span>
+            <input id="startDate" type="text" size="16" name="startDate" id="startDate" value="${ DefaultStartDate }" />
+            <img id="startDateHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -48,8 +46,8 @@
             <span>Ending time</span>
         </td>
         <td>
-            <input id="endDate" type="text" size="16" name="endDate" id="endDate" value="<%= DefaultEndDate %>" />
-            <span id="endDateHelp"></span>
+            <input id="endDate" type="text" size="16" name="endDate" id="endDate" value="${ DefaultEndDate }" />
+            <img id="endDateHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -57,8 +55,8 @@
             <span>WebEx username</span>
         </td>
         <td>
-            <input id="webExUser" type="text" size="16" name="webExUser" value="<%= DefaultWebExUser %>" />
-            <span id="WebExUsernameHelp"></span>
+            <input id="webExUser" type="text" size="16" name="webExUser" value="${ DefaultWebExUser }" />
+            <img id="WebExUsernameHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -66,8 +64,8 @@
             <span>WebEx password</span>
         </td>
         <td>
-            <input id="webExPass" type="password" size="16" name="webExPass" value="<%= DefaultWebExPass %>" />
-            <span id="WebExPasswordHelp"></span>
+            <input id="webExPass" type="password" size="16" name="webExPass" value="${ DefaultWebExPass }" />
+            <img id="WebExPasswordHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -76,7 +74,7 @@
         </td>
         <td>
             <input type="password" size="20" name="accessPassword" value="" />
-            <span id="passwordHelp"></span>
+            <img id="passwordHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
