@@ -70,7 +70,6 @@ class CSBooking(CSBookingBase):
     _allowMultiple = True
 
     _hasEventDisplay = True
-    _hasEventSessionDisplay = True
 
     _commonIndexes = ["All Videoconference"]
 
