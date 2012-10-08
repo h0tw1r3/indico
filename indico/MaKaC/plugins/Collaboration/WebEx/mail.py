@@ -38,7 +38,7 @@ class WebExNotificationBase(GenericNotification):
 
         self._modifLink = str(booking.getModificationURL())
 
-        self.setFromAddr("Indico Mailer<%s>"%HelperMaKaCInfo.getMaKaCInfoInstance().getSupportEmail())
+        self.setFromAddr("Indico Mailer<%s>" % Config.getInstance().getSupportEmail())
         self.setContentType("text/html")
 
     def _getBookingDetails(self):
