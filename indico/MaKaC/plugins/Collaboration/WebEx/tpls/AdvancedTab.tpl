@@ -29,7 +29,7 @@
     <img id="joinBeforeHostHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
     <br/>
 
-    <label for="joinBeforeTime" class="normal">Time attendees can join before event start time (in minutes)? }</label>
+    <label for="joinBeforeTime" class="normal">Time attendees can join before event start time (in minutes)?</label>
     <img id="joinBeforeTimeHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" /><br/>
     <input type="radio" class="centeredCheckBox" name="joinBeforeTime" value="0" />0
     <input type="radio" class="centeredCheckBox" name="joinBeforeTime" value="300" />5
