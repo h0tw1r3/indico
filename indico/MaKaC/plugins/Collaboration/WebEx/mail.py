@@ -21,7 +21,7 @@
 from MaKaC.webinterface.mail import GenericNotification
 from MaKaC.plugins.Collaboration.collaborationTools import MailTools
 
-from MaKaC.common.info import HelperMaKaCInfo
+from MaKaC.common.Configuration import Config
 from MaKaC.common.utils import formatDateTime
 from MaKaC.plugins.Collaboration.WebEx.common import getWebExOptionValueByName, makeTime
 import re
