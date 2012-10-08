@@ -119,8 +119,8 @@ Request details:<br />
 </table>
 """%({ "title":bp["meetingTitle"],
      "description":bp["meetingDescription"],
-     "start_date":formatDateTime(self._booking.getAdjustedStartDate(), format="%A, %d %B %Y. %I:%M %p"),
-     "end_date":formatDateTime(self._booking.getAdjustedEndDate(), format="%A, %d %B %Y. %I:%M %p"),
+     "start_date":self._booking.getAdjustedStartDate().strftime("%A, %d %B %Y. %I:%M %p"),
+     "end_date":self._booking.getAdjustedEndDate().strftime("%A, %d %B %Y. %I:%M %p"),
      "password":self._booking.getAccessPassword(),
      "url":self._booking.getUrl(),
      "phone":self._booking.getPhoneNum(), 
