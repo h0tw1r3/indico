@@ -71,10 +71,10 @@ class WebExOperations(object):
     </metaData>
     %(participants)s
     <enableOptions>
-      <attendeeList>true</attendeeList>
+      <attendeeList>%(seeParticipants)s</attendeeList>
       <audioVideo>true</audioVideo>
       <chat>true</chat>
-      <chatAllAttendees>true</chatAllAttendees>
+      <chatAllAttendees>%(enableChat)s</chatAllAttendees>
       <chatHost>true</chatHost>
       <chatPresenter>true</chatPresenter>
       <desktopShare>true</desktopShare>
@@ -84,7 +84,7 @@ class WebExOperations(object):
     </enableOptions>
     <schedule>
       <duration>%(duration)s</duration>
-      <joinTeleconfBeforeHost>true</joinTeleconfBeforeHost>
+      <joinTeleconfBeforeHost>%(joinBeforeHost)s</joinTeleconfBeforeHost>
       <openTime>%(openTime)s</openTime>
       <startDate>%(startDate)s:00</startDate>
       <timeZoneID>20</timeZoneID><!--Zone 20 is Greenwich GMT/UTC-->
@@ -96,7 +96,7 @@ class WebExOperations(object):
 </body>
 </serv:message>
 
-""" % ( { "username" : params['webExUser'], "password" : escape(params['webExPass']), "siteID" : getWebExOptionValueByName("WESiteID"), "partnerID" : getWebExOptionValueByName("WEPartnerID"), "meetingPassword": escape(params['accessPassword']), "startDate" : start_date, "duration" : booking.getDuration(), "meetingName" : escape(params['meetingTitle']), "description" : escape(params['meetingDescription']), "participants": participant_xml, "openTime":params['joinBeforeTime'] } )
+""" % ( { "username" : params['webExUser'], "password" : escape(params['webExPass']), "siteID" : getWebExOptionValueByName("WESiteID"), "partnerID" : getWebExOptionValueByName("WEPartnerID"), "meetingPassword": escape(params['accessPassword']), "startDate" : start_date, "duration" : booking.getDuration(), "meetingName" : escape(params['meetingTitle']), "description" : escape(params['meetingDescription']), "participants": participant_xml, "openTime":params['joinBeforeTime'], "seeParticipants": booking.getSeeParticipants(), "enableChat": booking.getEnableChat(), "joinBeforeHost": booking.getJoinBeforeHost() } )
         response_xml = sendXMLRequest( request_xml )
         dom = xml.dom.minidom.parseString( response_xml )
         status = dom.getElementsByTagName( "serv:result" )[0].firstChild.toxml('utf-8')
@@ -140,10 +140,10 @@ class WebExOperations(object):
     </metaData>
     %(participants)s
     <enableOptions>
-      <attendeeList>true</attendeeList>
+      <attendeeList>%(seeParticipants)s</attendeeList>
       <audioVideo>true</audioVideo>
       <chat>true</chat>
-      <chatAllAttendees>true</chatAllAttendees>
+      <chatAllAttendees>%(enableChat)s</chatAllAttendees>
       <chatHost>true</chatHost>
       <chatPresenter>true</chatPresenter>
       <desktopShare>true</desktopShare>
@@ -153,7 +153,7 @@ class WebExOperations(object):
     </enableOptions>
     <schedule>
       <duration>%(duration)s</duration>
-      <joinTeleconfBeforeHost>true</joinTeleconfBeforeHost>
+      <joinTeleconfBeforeHost>%(joinBeforeHost)s</joinTeleconfBeforeHost>
       <openTime>%(openTime)s</openTime>
       <startDate>%(startDate)s:00</startDate>
       <timeZoneID>20</timeZoneID><!--Zone 20 is Greenwich GMT/UTC-->
@@ -165,7 +165,7 @@ class WebExOperations(object):
 </body>
 </serv:message>
 
-""" % ( { "username" : params['webExUser'], "password" : escape(params['webExPass']), "siteID" : getWebExOptionValueByName("WESiteID"), "partnerID" : getWebExOptionValueByName("WEPartnerID"), "meetingPassword": escape(params['accessPassword']), "startDate" : start_date, "duration" : int(duration), "meetingName" : escape(params['meetingTitle']), "meetingKey" : booking._webExKey, "description": escape(params["meetingDescription"]), "participants": makeParticipantXML(booking._participants), "openTime":"900" } )
+""" % ( { "username" : params['webExUser'], "password" : escape(params['webExPass']), "siteID" : getWebExOptionValueByName("WESiteID"), "partnerID" : getWebExOptionValueByName("WEPartnerID"), "meetingPassword": escape(params['accessPassword']), "startDate" : start_date, "duration" : int(duration), "meetingName" : escape(params['meetingTitle']), "meetingKey" : booking._webExKey, "description": escape(params["meetingDescription"]), "participants": makeParticipantXML(booking._participants), "openTime":params['joinBeforeTime'], "seeParticipants": booking.getSeeParticipants(), "enableChat": booking.getEnableChat(), "joinBeforeHost": booking.getJoinBeforeHost() } )
         response_xml = sendXMLRequest( request_xml )
         dom = xml.dom.minidom.parseString( response_xml )
         status = dom.getElementsByTagName( "serv:result" )[0].firstChild.toxml('utf-8')
