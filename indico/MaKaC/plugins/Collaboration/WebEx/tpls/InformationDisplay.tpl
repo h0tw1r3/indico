@@ -1,6 +1,6 @@
 <table>
     <tbody>
-        <% if Booking.getHasAccessPassword(): %>
+        % if Booking.getHasAccessPassword():
         <tr>
             <td class="collaborationConfDisplayInfoLeftCol">
                 <span>Protection:</span>
@@ -9,7 +9,7 @@
                 This WebEx meeting is protected by a password.
             </td>
         </tr>
-        <% end %>
+        % endif
         <tr>
             <td class="collaborationConfDisplayInfoLeftCol">
                 <span>Agenda:</span>
