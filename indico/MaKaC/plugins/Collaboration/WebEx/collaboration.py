@@ -393,6 +393,15 @@ class CSBooking(CSBookingBase):
                     params[key] = "no"
                 if not oldBookingParams.has_key( key ):
                     oldBookingParams[key] = "no"
+            try:
+                result = ExternalOperationsManager.execute(self, "modifyBooking", WebExOperations.modifyBooking, self)
+                if isinstance(result, WebExError):
+                    return result
+            except Exception,e:
+                Logger.get('WebEx').error(
+                    """Could not modify booking with id %s of event with id %s, exception: %s""" %
+                    (self.getId(), self.getConference().getId(), str(e)))
+                return WebExError( errorType = None, userMessage = _("""There was an error communicating with the WebEx server.  The request was unsuccessful.  Error information: %s""" % str(e)) )
             for key in params.keys():
                     if key == "loggedInEmail":
                         continue
@@ -421,15 +430,6 @@ class CSBooking(CSBookingBase):
                         else:
                             self._bookingChangesHistory.append( "%s has changed: %s" % ( verboseKeyNames[key], params[key] ) )
                             self._latestChanges.append( "%s has changed." % ( verboseKeyNames[key] ) )
-            try:
-                result = ExternalOperationsManager.execute(self, "modifyBooking", WebExOperations.modifyBooking, self)
-                if isinstance(result, WebExError):
-                    return result
-            except Exception,e:
-                Logger.get('WebEx').error(
-                    """Could not modify booking with id %s of event with id %s, exception: %s""" %
-                    (self.getId(), self.getConference().getId(), str(e)))
-                return WebExError( errorType = None, userMessage = _("""There was an error communicating with the WebEx server.  The request was unsuccessful.  Error information: %s""" % str(e)) )
             self._checkStatus()
             self.getLoginURL()
             self.sendParticipantsEmail('modify')
