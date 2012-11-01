@@ -241,7 +241,7 @@ class ChangesFromWebExError(WebExError):
 
 class WebExWarning(Fossilizable):
     fossilizes(IWebExWarningFossil)
-    def __init__(self, msg, exception = None):
+    def __init__(self, msg = None, exception = None):
         self._msg = msg
         self._exception = exception
 
