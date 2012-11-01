@@ -38,7 +38,7 @@
         </td>
         <td>
             <input id="startDate" type="text" size="16" name="startDate" id="startDate" value="${ DefaultStartDate }" />
-            <img id="startDateHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
+            <img id="startDateHelpImg" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -47,7 +47,7 @@
         </td>
         <td>
             <input id="endDate" type="text" size="16" name="endDate" id="endDate" value="${ DefaultEndDate }" />
-            <img id="endDateHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
+            <img id="endDateHelpImg" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -56,7 +56,7 @@
         </td>
         <td>
             <input id="webExUser" type="text" size="16" name="webExUser" value="${ DefaultWebExUser }" />
-            <img id="WebExUsernameHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
+            <img id="webExUserHelpImg" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -65,7 +65,7 @@
         </td>
         <td>
             <input id="webExPass" type="password" size="16" name="webExPass" value="${ DefaultWebExPass }" />
-            <img id="WebExPasswordHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
+            <img id="webExPassHelpImg" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -74,7 +74,7 @@
         </td>
         <td>
             <input type="password" size="20" name="accessPassword" value="" />
-            <img id="passwordHelp" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
+            <img id="passwordHelpImg" src="${ systemIcon('help') }" style="margin-left:5px; vertical-align:middle;" />
         </td>
     </tr>
     <tr>
@@ -89,7 +89,6 @@
             <span>Email options</span>
         </td>
         <td>
-<!--            Send email to attendees? <input id="sendAttendeesEmail" type="checkbox" name="sendAttendeesEmail" value="yes" />-->
 <!--            Send email to event managers? <input id="sendCreatorEmail" type="checkbox" name="sendCreatorEmail" value="yes" />-->
            <input id="sendAttendeesEmail" type="hidden" name="sendAttendeesEmail" value="yes" />
            <input id="sendSelfEmail" type="checkbox" name="sendSelfEmail" value="yes" /><input id="loggedInEmail" type="hidden" name="loggedInEmail" value="" /> Send a copy of the invitation email to your Indico email account? 
